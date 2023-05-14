@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function Logout() {
     return (
@@ -10,9 +11,9 @@ export default function Logout() {
                 </div>
                 <div className="mt-4 ">
                     <button className="bg-red-500 text-white mr-2 p-2 rounded-lg" onClick={() => signOut()}>Yes</button>
-                    <a href="/">
+                    <Link href="/">
                         <button className="bg-gray-400 p-2 rounded-lg">No</button>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </Layout>
