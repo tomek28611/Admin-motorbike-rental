@@ -9,11 +9,11 @@ export default function Nav() {
     
     return (
         <aside className="p-4 pr-0">
-            <a className="flex mb-4 mr-8" href="/">
+            <Link className="flex mb-4 mr-8" href="/">
                 <span className='font-bold'>
                     Andaman Rental
                 </span>
-            </a>
+            </Link>
             <nav className='flex flex-col gap-4'>
                 <Link href={'/'} className={pathname === '/' ? activeLink : inactiveLink}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
