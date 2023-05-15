@@ -7,8 +7,11 @@ export default async function handle(req, res) {
     await mongooseConnect();
 
     if (method === 'GET') {
-        res.json(await Product.find());
-    }
+        if (req.query?.id) {
+            res.json(await Product.findOne({ _id:req.query.id }))
+        } else {
+            res.json(await Product.find());
+        }}
 
     if (method === 'POST') {
         const {name, deposit, pricePerDay, pricePerWeek, pricePerMonth, description} = req.body;
@@ -16,5 +19,11 @@ export default async function handle(req, res) {
             name, deposit, pricePerDay, pricePerWeek, pricePerMonth, description
         })
         res.json(productDoc);
+    }
+
+    if (method === 'PUT') {
+        const { _id, name, deposit, pricePerDay, pricePerWeek, pricePerMonth, description} = req.body;
+        await Product.updateOne({ _id }, {name, deposit, pricePerDay, pricePerWeek, pricePerMonth, description});
+        res.json(true);
     }
 }
