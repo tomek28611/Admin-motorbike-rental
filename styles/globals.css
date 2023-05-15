@@ -22,25 +22,26 @@ label{
     @apply bg-orange-300 px-4 py-1 shadow-xl rounded-xl hover:bg-orange-500;
 }
 table.basic{
-    @apply w-full bg-white rounded-sm shadow-md;
+    @apply w-full;
 }
 table.basic thead tr td,
 table.basic thead tr th
 {
-    @apply text-sm text-gray-600 uppercase border-b border-gray-200 px-4 py-2;
+    @apply text-sm uppercase border-b border-orange-500 px-4 py-2;
 }
 table.basic tr td{
-    @apply px-4 py-1;
+    @apply border;
 }
 table.basic a{
-    @apply px-4 rounded-sm inline-flex mx-1 items-center gap-1 text-sm py-1;
+    @apply  px-4 rounded-lg inline-flex mx-1 items-center gap-1 text-sm py-1;
 }
 .btn-default, .btn-red{
-    @apply px-4 py-1 rounded-md;
+    @apply px-4 py-1 rounded-lg;
 }
 .btn-red{
-    @apply bg-red-200 text-red-600 px-4 py-1 rounded-sm shadow-sm;
+    @apply bg-red-500 text-white px-4 py-1 rounded-lg shadow-xl
+    ;
 }
 .btn-default{
-    @apply bg-white text-gray-800 px-4 py-1 rounded-sm border border-gray-200 shadow-sm;
+    @apply bg-orange-300 text-gray-800 px-4 py-1 rounded-lg border border-gray-200 shadow-xl;
 }
