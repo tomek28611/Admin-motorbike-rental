@@ -84,7 +84,7 @@ export default function ProductForm({
                     </div>
                 ))}
                 {isUploading && (
-                    <div className="h-24">
+                    <div className="h-24 p-1 bg-orange-100 rounded-md flex items-center">
                         <Spinner />
                     </div>
                 )}
