@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Spinner from "./Spinner";
 
 export default function ProductForm({
     _id,
@@ -11,15 +12,17 @@ export default function ProductForm({
     pricePerWeek: existingPricePerWeek,
     pricePerMonth: existingPricePerMonth,
     description: existingDescription,
-    images
+    images: existingImages,
 }) {
     const [name, setName] = useState(existingName || '');
+    const [images, setImages] = useState(existingImages || []);
     const [deposit, setDeposit] = useState(existingDeposit || '');
     const [pricePerDay, setPricePerDay] = useState(existingPricePerDay || '');
     const [pricePerWeek, setPricePerWeek] = useState(existingPricePerWeek || '');
     const [pricePerMonth, setPricePerMonth] = useState(existingPricePerMonth || '');
     const [description, setDescription] = useState(existingDescription || '');
     const [goToProducts, setGoToProducts] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     const router = useRouter();
 
@@ -31,7 +34,8 @@ export default function ProductForm({
             pricePerDay,
             pricePerWeek,
             pricePerMonth,
-            description
+            description,
+            images
         }
         if (_id) {
             //update
@@ -49,17 +53,16 @@ export default function ProductForm({
     async function uploadImages(ev) {
         const files = ev.target?.files;
         if (files?.length > 0) {
-           
+            setIsUploading(true);
             const data = new FormData();
             for (const file of files) {
                 data.append('file', file)
             }
-            const res = await fetch('/api/upload',  {
-                method: 'POST',
-                body: data,
+            const res = await axios.post('/api/upload', data);
+            setImages(oldImages => {
+                return [...oldImages, ...res.data.links];
             });
-            console.log(res);
- 
+            setIsUploading(false);
         }
     }
 
@@ -74,7 +77,17 @@ export default function ProductForm({
                 onChange={ev => setName(ev.target.value)} />
 
             <label>Photos</label>
-            <div className="mb-2">
+            <div className="mb-2 flex flex-wrap gap-2">
+                {images?.map(link => (
+                    <div key={link} className="h-24">
+                        <img src={link} alt="" className="rounded-md" />
+                    </div>
+                ))}
+                {isUploading && (
+                    <div className="h-24">
+                        <Spinner />
+                    </div>
+                )}
                 <label className="w-24 h-24 border text-center rounded-lg flex flex-col items-center justify-center text-sm text-gray-500 bg-orange-200 cursor-pointer hover:bg-gray-100 hover:text-black hover:font-bold">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
@@ -84,9 +97,7 @@ export default function ProductForm({
                     </div>
                     <input type="file" onChange={uploadImages} className="hidden" />
                 </label>
-                {!images?.lenght && (
-                    <div>No photos</div>
-                )}
+  
             </div>
 
             <label>Deposit</label>

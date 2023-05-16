@@ -8,6 +8,7 @@ const ProductSchema = new Schema({
     pricePerWeek: String,
     pricePerMonth: String,
     description: String,
+    images: [{type: String}],
 
 });
 
